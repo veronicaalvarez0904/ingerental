@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://ingerental.com/">
 <meta property="og:url" content="https://ingerental.com/">
 <meta property="og:site_name" content="Ingerental SAS">
-<meta property="og:image" content="https://ingerental.com/assets/img/logo.png">
+<meta property="og:image" content="https://ingerental.com/assets/img/fotos/og-ingerental.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2730">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
@@ -47,6 +47,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{background:var(--white);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--white)}
@@ -107,7 +108,7 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 
 /* Photo slots */
 .slot{position:relative;overflow:hidden;background:var(--graphite-2);isolation:isolate}
-.slot img{width:100%;height:100%;object-fit:cover}
+.slot img,.slot video{width:100%;height:100%;object-fit:cover;display:block}
 .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:18px;color:var(--on-dark);
   background:
    repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 14px),
@@ -221,6 +222,8 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 
 /* Machinery */
 .machinery{background:var(--graphite);color:var(--on-dark);position:relative;overflow:hidden}
+.machinery .lead{color:var(--on-dark-muted)}
+.machinery .eyebrow{color:var(--on-dark-muted)}
 .machinery::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:repeating-linear-gradient(-45deg,var(--yellow) 0 14px,var(--graphite) 14px 28px)}
 .mach-top{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,72px);align-items:center;margin-bottom:56px}
 .mach-top > div{display:flex;flex-direction:column;gap:18px;min-width:0}
@@ -231,7 +234,7 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 .mach-sub{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:24px;border-top:1px solid rgba(255,255,255,.14);padding-top:40px}
 .mach-sub h3{font-size:26px;font-weight:800}
 .mach-sub p{color:var(--on-dark-muted);font-size:15px;max-width:60ch;margin-top:8px}
-.eq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.eq-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .eq{background:var(--graphite-2);border:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;min-width:0}
 .eq .slot{aspect-ratio:16/10;background:#333338}
 .eq-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px;flex:1}
@@ -242,8 +245,9 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 .eq .status{display:inline-flex;align-items:center;gap:8px;font:500 12px var(--f-mono);letter-spacing:.06em;color:var(--on-dark-muted)}
 .eq .status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--steel)}
 .eq .btn{margin-top:auto}
-@media (max-width:900px){.mach-top{grid-template-columns:1fr}.eq-grid{grid-template-columns:1fr 1fr}.eq:last-child{grid-column:1/-1}}
-@media (max-width:600px){.eq-grid{grid-template-columns:1fr}.eq:last-child{grid-column:auto}.mach-list{grid-template-columns:1fr}}
+@media (max-width:1080px){.eq-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.mach-top{grid-template-columns:1fr}}
+@media (max-width:600px){.eq-grid{grid-template-columns:1fr}.mach-list{grid-template-columns:1fr}}
 
 /* CTA */
 .cta{position:relative;background:var(--petrol);color:var(--on-dark);overflow:hidden}
@@ -251,7 +255,7 @@ header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgrou
 .cta .slot .ph{background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 16px),linear-gradient(110deg,var(--petrol) 40%,var(--petrol-2));justify-content:flex-start;align-items:flex-end;padding:22px var(--gutter-r)}
 .cta .slot .ph::before{display:none}
 .cta .slot .ph .ph-ico{display:none}
-.cta .slot img{opacity:.35}
+.cta .slot img,.cta .slot video{opacity:.32}
 .cta .wrap{position:relative;padding-block:clamp(72px,10vw,120px);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
 .cta h2{font-size:clamp(34px,5vw,60px);font-weight:900;font-stretch:118%;max-width:16ch}
 .cta p{font-size:19px;color:var(--on-dark-muted);max-width:48ch}
@@ -299,23 +303,19 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--graphite
 a.v:hover{color:var(--yellow);text-decoration:underline}
 .soc-row{display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
 .soc-row .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-muted)}
-.soc-row.foot{flex-direction:row;gap:12px;border-top:0;padding-top:0;margin-top:20px}
-.soc{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;color:#fff;transition:transform .2s,box-shadow .2s}
-.soc svg{width:22px;height:22px}
-.soc.sm{width:24px;height:24px;border-radius:7px}.soc.sm svg{width:14px;height:14px}
+.soc-row.foot{flex-direction:row;gap:10px;border-top:0;padding-top:0;margin-top:18px}
+.soc{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:#fff;transition:transform .2s,box-shadow .2s;box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+.soc svg{width:17px;height:17px}
+.soc.sm{width:20px;height:20px}.soc.sm svg{width:11px;height:11px}
 .soc-instagram{background:radial-gradient(circle at 30% 107%,#FDF497 0%,#FDF497 5%,#FD5949 45%,#D6249F 60%,#285AEB 90%)}
 .soc-tiktok{background:#010101}
-.soc-tiktok svg{filter:drop-shadow(-1.4px -1px 0 #25F4EE) drop-shadow(1.4px 1px 0 #FE2C55)}
+.soc-tiktok svg{filter:drop-shadow(-1px -.7px 0 #25F4EE) drop-shadow(1px .7px 0 #FE2C55)}
 .soc-facebook{background:#1877F2}
 .soc-linkedin{background:#0A66C2}
-a.soc:hover,.soc-pill:hover .soc{transform:translateY(-2px);box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
-.soc-pills{display:flex;flex-direction:column;gap:10px}
-.soc-pill{display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;border:1px solid rgba(255,255,255,.14);border-radius:14px;text-decoration:none;color:var(--on-dark);transition:border-color .2s,background .2s}
-.soc-pill:hover{border-color:var(--yellow);background:rgba(233,185,69,.08)}
-.soc-pill b{display:block;font-size:15px}
-.soc-pill small{display:block;font-size:13px;color:var(--on-dark-muted);word-break:break-all}
+a.soc:hover{transform:translateY(-2px) scale(1.06);box-shadow:0 0 0 2px var(--yellow),0 8px 16px -6px rgba(0,0,0,.6)}
+.soc-icons{display:flex;gap:10px}
 .soc-links{display:flex;flex-direction:column;gap:9px}
-.soc-link{display:inline-flex;align-items:center;gap:10px}
+.soc-link{display:inline-flex;align-items:center;gap:8px}
 .todo{display:inline-block;font:500 12px var(--f-mono);letter-spacing:.04em;color:var(--yellow);border:1px dashed rgba(233,185,69,.6);padding:2px 8px;border-radius:2px}
 .footer .todo{font-size:11px}
 @media (max-width:900px){.contact{grid-template-columns:1fr}}
@@ -588,46 +588,52 @@ const CONFIG = {
     }
   },
   // Fotografías: pegue la URL o ruta de cada imagen. Vacío = espacio reservado.
+  // Fotografías y videos. "video" (mp4) tiene prioridad sobre "src"; "src" sirve de portada mientras carga.
   fotos: {
-    hero:      { src: "", alt: "Maquinaria pesada trabajando en obra",            nota: "Foto panorámica de obra o maquinaria en operación (horizontal, mín. 1600 px)" },
-    about:     { src: "", alt: "Personal técnico de Ingerental SAS en campo",     nota: "Equipo de trabajo o personal técnico en campo" },
-    machinery: { src: "", alt: "Maquinaria de Ingerental SAS",                    nota: "Foto de la flota o de un equipo propio" },
-    cta:       { src: "", alt: "",                                                 nota: "Imagen de fondo: obra o maquinaria (se oscurece automáticamente)" }
+    hero:      { video: "assets/video/hero-excavadora.mp4", src: "assets/video/hero-excavadora.jpg", alt: "Excavadora de Ingerental SAS trabajando en un talud", nota: "Foto o video vertical de maquinaria en operación" },
+    about:     { src: "assets/img/fotos/nosotros-equipo-campo.jpg", alt: "Personal de Ingerental SAS instalando geotextil junto a una excavadora", nota: "Equipo de trabajo o personal técnico en campo" },
+    machinery: { src: "assets/img/fotos/flota-patio.jpg", alt: "Excavadora CAT de la flota de Ingerental SAS en patio", nota: "Foto de la flota o de un equipo propio" },
+    cta:       { video: "assets/video/dron-obra.mp4", src: "assets/video/dron-obra.jpg", alt: "", nota: "Imagen de fondo: obra o maquinaria (se oscurece automáticamente)" }
   },
   heroTexto: "Soluciones integrales en obras civiles, infraestructura vial, movimiento de tierras, urbanismo y alquiler de maquinaria para proyectos que exigen compromiso, capacidad técnica y cumplimiento.",
   servicios: [
-    { id:"movimiento-de-tierras", nombre:"Movimiento de tierras", tag:"Adecuación de terrenos", foto:"", nota:"Excavadora en corte o relleno de terreno",
+    { id:"movimiento-de-tierras", nombre:"Movimiento de tierras", tag:"Adecuación de terrenos", foto:"assets/img/fotos/movimiento-tierras.jpg", nota:"Excavadora en corte o relleno de terreno",
       resumen:"Excavaciones, cortes, rellenos y adecuación de terrenos para proyectos industriales, urbanísticos y rurales.",
       descripcion:"Realizamos excavaciones, cortes, rellenos y adecuación de terrenos para proyectos industriales, urbanísticos y rurales. Contamos con maquinaria propia y personal calificado para desarrollar trabajos de acuerdo con las necesidades de cada proyecto.",
       items:["Excavaciones y cortes de terreno","Rellenos y conformación de superficies","Nivelación y adecuación de terrenos","Preparación de áreas para proyectos de infraestructura","Maquinaria para diferentes necesidades operativas"] },
-    { id:"construccion-de-vias", nombre:"Construcción de vías", tag:"Infraestructura vial", foto:"", nota:"Vía rural en construcción o conformación de afirmado",
+    { id:"construccion-de-vias", nombre:"Construcción de vías", tag:"Infraestructura vial", foto:"assets/img/fotos/construccion-vias.jpg", nota:"Vía rural en construcción o conformación de afirmado",
       resumen:"Obras viales en zonas rurales y de difícil acceso, de la adecuación del terreno a la pavimentación.",
       descripcion:"Ejecutamos obras viales en zonas rurales y de difícil acceso, desde la adecuación inicial del terreno hasta la conformación de capas de afirmado o base y la ejecución de pavimentos, según el alcance de cada proyecto.",
       items:["Adecuación y conformación de terrenos","Construcción y mejoramiento de vías rurales","Preparación de subrasantes","Conformación de afirmados y bases","Pavimentación según requerimientos técnicos"] },
-    { id:"obras-de-concreto", nombre:"Obras de concreto a la vista", tag:"Estructuras", foto:"", nota:"Muro, cuneta o estructura de concreto terminada",
+    { id:"obras-de-concreto", nombre:"Obras de concreto a la vista", tag:"Estructuras", foto:"assets/img/fotos/drenaje-tierra-armada.jpg", nota:"Muro, cuneta o estructura de concreto terminada",
       resumen:"Estructuras de concreto funcionales y resistentes, con durabilidad y calidad en los acabados.",
       descripcion:"Construimos estructuras de concreto funcionales y resistentes, diseñadas para responder a las exigencias de cada obra y aportar durabilidad, estabilidad y calidad en los acabados.",
       items:["Muros de concreto","Placas y estructuras","Canales y obras de drenaje","Alcantarillas transversales","Cunetas y conducción de aguas","Accesos vehiculares"] },
-    { id:"urbanismos", nombre:"Urbanismos", tag:"Espacio público", foto:"", nota:"Andenes, vías internas o zonas comunes",
+    { id:"urbanismos", nombre:"Urbanismos", tag:"Espacio público", foto:"assets/img/fotos/urbanismo-cimentacion.jpg", nota:"Andenes, vías internas o zonas comunes",
       resumen:"Infraestructura vial, andenes, zonas comunes y espacio público para desarrollos urbanísticos.",
       descripcion:"Ejecutamos desarrollos urbanísticos que integran infraestructura vial, andenes, zonas comunes y espacios públicos, contribuyendo a la funcionalidad, conectividad y organización de los espacios.",
       items:["Infraestructura vial urbana","Construcción de andenes","Adecuación de zonas comunes","Desarrollo de espacios públicos","Obras complementarias"] },
-    { id:"alquiler", nombre:"Alquiler de maquinaria", tag:"Equipos con operador", foto:"", nota:"Equipo de la flota propia",
+    { id:"alquiler", nombre:"Alquiler de maquinaria", tag:"Equipos con operador", foto:"assets/img/fotos/alquiler-cat-312c.jpg", nota:"Equipo de la flota propia",
       resumen:"Maquinaria para construcción y movimiento de tierras, con operadores capacitados y certificados.",
       descripcion:"Ponemos a disposición de nuestros clientes una flota de maquinaria para proyectos de construcción y movimiento de tierras. Ofrecemos equipos en condiciones operativas adecuadas y operadores capacitados y certificados, con enfoque en la seguridad, la productividad y el cumplimiento de los requerimientos del proyecto.",
       items:["Maquinaria para construcción","Equipos para movimiento de tierras","Operadores capacitados y certificados","Soluciones para obras civiles","Atención según su necesidad operativa"] }
   ],
-  // Proyectos: marque demo:true mientras sean ejemplos. Reemplácelos por obras reales.
+  // Proyectos ejecutados (fotos reales). Ajuste nombres, ubicaciones y descripciones con los datos de cada obra.
+  // Marque demo:true solo si una ficha es un ejemplo.
   proyectos: [
-    { demo:true, nombre:"Nombre del proyecto", tipo:"Construcción de vías", ubicacion:"", descripcion:"Breve descripción del alcance y resultado de la obra.", servicios:["Construcción de vías","Movimiento de tierras"], foto:"" },
-    { demo:true, nombre:"Nombre del proyecto", tipo:"Movimiento de tierras", ubicacion:"", descripcion:"Breve descripción del alcance y resultado de la obra.", servicios:["Movimiento de tierras","Alquiler de maquinaria"], foto:"" },
-    { demo:true, nombre:"Nombre del proyecto", tipo:"Obras de concreto", ubicacion:"", descripcion:"Breve descripción del alcance y resultado de la obra.", servicios:["Obras de concreto a la vista"], foto:"" }
+    { nombre:"Muros en tierra armada – Monserrat", tipo:"Contención y drenaje", ubicacion:"Armenia – Titiribí, Antioquia", descripcion:"Conformación de muros en tierra armada con geotextil e instalación de tubería de drenaje.", servicios:["Movimiento de tierras","Obras de drenaje"], foto:"assets/img/fotos/proyecto-monserrat.jpg" },
+    { nombre:"Adecuación de terreno – Sitioviejo", tipo:"Movimiento de tierras", ubicacion:"Sitioviejo, Titiribí, Antioquia", descripcion:"Excavación, manejo de rocas y cargue de material con excavadora y volquetas.", servicios:["Movimiento de tierras","Alquiler de maquinaria"], foto:"assets/img/fotos/proyecto-sitioviejo.jpg" },
+    { nombre:"Excavación de zanja", tipo:"Movimiento de tierras", ubicacion:"Marinilla, Antioquia", descripcion:"Excavación con miniexcavadora para la conformación de zanjas y taludes.", servicios:["Movimiento de tierras"], foto:"assets/img/fotos/proyecto-marinilla.jpg" },
+    { nombre:"Explanación de lote en montaña", tipo:"Movimiento de tierras", ubicacion:"", descripcion:"Cortes, rellenos y conformación de plataforma con excavadoras y volquetas.", servicios:["Movimiento de tierras","Alquiler de maquinaria"], foto:"assets/img/fotos/proyecto-adecuacion-lote.jpg" },
+    { nombre:"Conformación de vía de acceso", tipo:"Construcción de vías", ubicacion:"", descripcion:"Corte de talud y conformación de la banca para una vía de acceso.", servicios:["Construcción de vías","Movimiento de tierras"], foto:"assets/img/fotos/proyecto-via-acceso.jpg" },
+    { nombre:"Adecuación de terreno en ladera", tipo:"Movimiento de tierras", ubicacion:"", descripcion:"Descapote, cortes y nivelación de terreno en zona rural.", servicios:["Movimiento de tierras"], foto:"assets/img/fotos/proyecto-ladera.jpg" }
   ],
   // Maquinaria: complete con el inventario real. Campos vacíos se muestran "Por registrar".
   maquinaria: [
-    { nombre:"", tipo:"", marcaModelo:"", capacidad:"", uso:"", disponibilidad:"", foto:"" },
-    { nombre:"", tipo:"", marcaModelo:"", capacidad:"", uso:"", disponibilidad:"", foto:"" },
-    { nombre:"", tipo:"", marcaModelo:"", capacidad:"", uso:"", disponibilidad:"", foto:"" }
+    { nombre:"Excavadora CAT 312C", tipo:"Excavadora sobre orugas", marcaModelo:"Caterpillar 312C", capacidad:"", uso:"Excavaciones, cortes, cargue de material", disponibilidad:"", foto:"assets/img/fotos/equipo-excavadora-cat-312c.jpg" },
+    { nombre:"Excavadora Hitachi", tipo:"Excavadora sobre orugas", marcaModelo:"Hitachi", capacidad:"", uso:"Excavaciones y manejo de rocas", disponibilidad:"", foto:"assets/img/fotos/equipo-excavadora-hitachi.jpg" },
+    { nombre:"Retroexcavadora Volvo BL60B", tipo:"Retroexcavadora", marcaModelo:"Volvo BL60B", capacidad:"", uso:"Zanjas, cargue y obras urbanas", disponibilidad:"", foto:"assets/img/fotos/equipo-retroexcavadora-volvo.jpg" },
+    { nombre:"Bulldozer CAT", tipo:"Tractor de orugas", marcaModelo:"Caterpillar", capacidad:"", uso:"Explanación, empuje y nivelación", disponibilidad:"", foto:"assets/img/fotos/equipo-bulldozer-cat.jpg" }
   ]
 };
 
@@ -664,9 +670,14 @@ const $ = (s,el=document)=>el.querySelector(s);
 const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const todo = (t="Pendiente de configurar")=>`<span class="todo">${t}</span>`;
 function placeholder(nota){return `<div class="ph" role="img" aria-label="Espacio reservado para fotografía: ${esc(nota)}">${ICON.camera.replace('<svg','<svg class="ph-ico"')}<span class="ph-tag">Espacio para fotografía</span><span class="ph-cap">${esc(nota)}</span></div>`}
-function fillSlot(el,{src,alt,nota}){
+const reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function fillSlot(el,{src,alt,nota,video}){
   if(!el) return;
-  if(src){
+  if(video&&!reduceMotion){
+    el.innerHTML=`<video src="${esc(video)}" ${src?`poster="${esc(src)}"`:""} autoplay muted loop playsinline preload="metadata" aria-label="${esc(alt||"")}"></video>`;
+    const v=el.querySelector("video"); v.muted=true; v.play&&v.play().catch(()=>{});
+    v.addEventListener("error",()=>fillSlot(el,{src,alt,nota}),{once:true});
+  } else if(src){
     el.innerHTML=`<img src="${esc(src)}" alt="${esc(alt||"")}" loading="lazy" decoding="async">`;
     el.querySelector("img").addEventListener("error",()=>{el.innerHTML=placeholder(nota+" (la imagen configurada no cargó)")},{once:true});
   } else el.innerHTML=placeholder(nota);
@@ -726,7 +737,7 @@ function renderProjects(){
         <h3>${esc(p.nombre)}</h3>
         <dl class="meta">
           <dt>Tipo</dt><dd>${esc(p.tipo)}</dd>
-          <dt>Ubicación</dt><dd ${p.ubicacion?"":'class="pending"'}>${p.ubicacion?esc(p.ubicacion):"Por definir"}</dd>
+          ${p.ubicacion?`<dt>Ubicación</dt><dd>${esc(p.ubicacion)}</dd>`:""}
           <dt>Servicios</dt><dd>${esc(p.servicios.join(" · "))}</dd>
         </dl>
         <p style="color:var(--muted);font-size:14px">${esc(p.descripcion)}</p>
@@ -742,16 +753,13 @@ const anyEq=CONFIG.maquinaria.some(m=>m.nombre);
 $("#fleet-intro").textContent=anyEq?"Consulte las especificaciones de cada equipo y solicite su disponibilidad para las fechas de su obra."
   :"El inventario de equipos se publicará próximamente. Mientras tanto, cuéntenos qué tipo de trabajo necesita y le indicaremos la maquinaria adecuada.";
 $("#eq-grid").innerHTML=CONFIG.maquinaria.map((m,i)=>{
-  const f=(v,t="Por registrar")=>v?`<dd>${esc(v)}</dd>`:`<dd class="pending">${t}</dd>`;
+  const row=(k,v)=>v?`<dt>${k}</dt><dd>${esc(v)}</dd>`:"";
   return `<article class="eq">
     <div class="slot" data-eq="${i}"></div>
     <div class="eq-body">
       <h4>${m.nombre?esc(m.nombre):`Ficha de equipo ${String(i+1).padStart(2,"0")}`}</h4>
       <dl class="meta">
-        <dt>Tipo</dt>${f(m.tipo)}
-        <dt>Marca / modelo</dt>${f(m.marcaModelo)}
-        <dt>Capacidad</dt>${f(m.capacidad)}
-        <dt>Uso</dt>${f(m.uso)}
+        ${row("Tipo",m.tipo)}${row("Marca / modelo",m.marcaModelo)}${row("Capacidad",m.capacidad)}${row("Uso",m.uso)}
       </dl>
       <span class="status">${m.disponibilidad?esc(m.disponibilidad):"Disponibilidad a consultar"}</span>
       <a class="btn btn-primary" href="#contacto" data-quote="alquiler" ${m.nombre?`data-equipo="${esc(m.nombre)}"`:""}>Consultar disponibilidad</a>
@@ -785,9 +793,8 @@ const REDES=[["instagram","Instagram"],["tiktok","TikTok"],["facebook","Facebook
 const redes=REDES.map(([k,n])=>E.redes[k]?`<a class="soc-link" href="${esc(E.redes[k])}" target="_blank" rel="noopener"><span class="soc soc-${k} sm">${ICON[k]}</span>${n}</a>`:"").join("");
 const handle=u=>"@"+u.replace(/\/+$/,"").split("/").pop().replace(/^@/,"");
 const socialIcons=REDES.map(([k,n])=>`<a class="soc soc-${k}" href="${esc(E.redes[k])}" target="_blank" rel="noopener" aria-label="${n} de Ingerental SAS">${ICON[k]}</a>`).join("");
-const socialPills=REDES.map(([k,n])=>`<a class="soc-pill" href="${esc(E.redes[k])}" target="_blank" rel="noopener"><span class="soc soc-${k}">${ICON[k]}</span><span><b>${n}</b><small>${esc(handle(E.redes[k]))}</small></span></a>`).join("");
 if(socialIcons){
-  $("#info-list").insertAdjacentHTML("afterend",`<div class="soc-row"><span class="k">Síguenos</span><div class="soc-pills">${socialPills}</div></div>`);
+  $("#info-list").insertAdjacentHTML("afterend",`<div class="soc-row"><span class="k">Síguenos</span><div class="soc-icons">${socialIcons}</div></div>`);
   $(".foot-brand").insertAdjacentHTML("beforeend",`<div class="soc-row foot">${socialIcons}</div>`);
 }
 $("#foot-co").innerHTML=`<li>${esc(E.razonSocial)}</li><li>NIT ${E.nit?esc(E.nit):todo()}</li><li>${E.ciudad?esc(E.ciudad):todo("Ciudad pendiente")}</li>${redes?`<li class="soc-links">${redes}</li>`:`<li>${todo("Redes sociales pendientes")}</li>`}`;

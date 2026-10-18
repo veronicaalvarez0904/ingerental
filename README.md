@@ -29,14 +29,29 @@ Todo lo editable está en el bloque `CONFIG` al inicio del `<script>` de `index.
 | `proyectos` | Obras ejecutadas. Quite `demo:true` cuando sean proyectos reales. |
 | `maquinaria` | Inventario de equipos (nombre, tipo, marca/modelo, capacidad, uso, disponibilidad, foto). |
 
-## Fotografías
+## Fotografías y videos
 
-1. Suba las fotos a `assets/img/fotos/` (JPG o WebP, máximo ~300 KB cada una, horizontales de 1600 px para el hero).
-2. En `CONFIG`, ponga la ruta en el campo correspondiente, por ejemplo:
-   `fotos.hero.src: "assets/img/fotos/hero.jpg"` o `servicios[0].foto: "assets/img/fotos/movimiento-tierras.jpg"`.
-3. Si un campo queda vacío, la página muestra el espacio reservado con la descripción de la foto que va ahí.
+Las fotos optimizadas están en `assets/img/fotos/` (JPG de máx. 1280–1600 px) y los videos en `assets/video/` (MP4 H.264 sin sonido, 10–14 s, ~3 MB, con su imagen de portada `.jpg`).
 
-Use solo fotos propias o con licencia, y no presente obras de terceros como propias.
+| Ubicación en la página | Archivo |
+|---|---|
+| Portada (video vertical) | `assets/video/hero-excavadora.mp4` |
+| Fondo de "¿Tienes un proyecto en marcha?" (video de dron) | `assets/video/dron-obra.mp4` |
+| Nosotros | `nosotros-equipo-campo.jpg` |
+| Servicios | `movimiento-tierras.jpg`, `construccion-vias.jpg`, `drenaje-tierra-armada.jpg`, `urbanismo-cimentacion.jpg`, `alquiler-cat-312c.jpg` |
+| Proyectos | `proyecto-*.jpg` |
+| Maquinaria y flota | `flota-patio.jpg`, `equipo-*.jpg` |
+| Vista previa al compartir (Open Graph) | `og-ingerental.jpg` |
+
+Para cambiar una imagen: súbala a `assets/img/fotos/` y ponga la ruta en `CONFIG` (`fotos`, `servicios[].foto`, `proyectos[].foto` o `maquinaria[].foto`).
+Para un video: campo `video` en `CONFIG.fotos` (con `src` como portada). Si el navegador no puede reproducirlo, o el visitante tiene activado "reducir movimiento", se muestra la portada.
+
+Para preparar un video nuevo (requiere ffmpeg):
+```bash
+ffmpeg -ss 5 -t 12 -i original.MOV -an -vf "scale=1280:-2,fps=30,format=yuv420p" -c:v libx264 -crf 28 -movflags +faststart assets/video/nuevo.mp4
+```
+
+Use solo fotos propias y evite placas de vehículos o rostros sin autorización.
 
 ## Formulario de cotización (WhatsApp)
 
@@ -75,6 +90,6 @@ python3 -m http.server 8080
 
 ## Estado
 
-**Operativo:** envío de solicitudes por WhatsApp (formulario, botón en portada y botón flotante), navegación y menú móvil, detalle de servicios, filtros de proyectos, fichas de maquinaria, validaciones del formulario, SEO básico (título, descripción, Open Graph, sitemap).
+**Operativo:** fotos y videos reales, envío de solicitudes por WhatsApp (formulario, botón en portada y botón flotante), navegación y menú móvil, detalle de servicios, filtros de proyectos, fichas de maquinaria, validaciones del formulario, SEO básico (título, descripción, Open Graph, sitemap).
 
-**Requiere configuración:** fotos reales, datos de contacto, NIT, redes, política de privacidad, proyectos reales e inventario de maquinaria.
+**Por completar:** política de tratamiento de datos; verificar nombres, ubicaciones y descripciones de proyectos; capacidades y disponibilidad de cada equipo.
