@@ -295,7 +295,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--graphite
 .info-list li{display:flex;gap:14px;align-items:flex-start}
 .info-list svg{flex:none;width:20px;height:20px;color:var(--yellow);margin-top:2px}
 .info-list .k{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-muted)}
-.info-list .v{font-weight:600;word-break:break-word}
+.info-list .v{font-weight:600;word-break:break-word;color:var(--on-dark);text-decoration:none}
+a.v:hover{color:var(--yellow);text-decoration:underline}
 .todo{display:inline-block;font:500 12px var(--f-mono);letter-spacing:.04em;color:var(--yellow);border:1px dashed rgba(233,185,69,.6);padding:2px 8px;border-radius:2px}
 .footer .todo{font-size:11px}
 @media (max-width:900px){.contact{grid-template-columns:1fr}}
@@ -554,10 +555,10 @@ const CONFIG = {
     razonSocial: "Ingerental SAS",
     nit: "",                 // Ej: "900.000.000-0"
     direccion: "",
-    ciudad: "",              // Ej: "Medellín, Antioquia"
-    telefono: "",            // Ej: "+57 300 000 0000"
-    correo: "",              // Ej: "comercial@ingerental.com"
-    horario: "",             // Ej: "Lunes a viernes, 7:00 a. m. – 5:00 p. m."
+    ciudad: "Envigado, Antioquia",
+    telefono: "+57 300 610 6404",
+    correo: "info@ingerental.com",
+    horario: "8:00 a. m. – 6:00 p. m.",
     whatsapp: "573006106404", // Solo dígitos con indicativo de país (57 = Colombia)
     politicaPrivacidad: "",  // URL de la política de tratamiento de datos
     redes: { facebook: "", instagram: "", linkedin: "" }
@@ -733,9 +734,9 @@ CONFIG.maquinaria.forEach((m,i)=>fillSlot($(`[data-eq="${i}"]`),{src:m.foto,alt:
 const E=CONFIG.empresa;
 const waUrl=E.whatsapp?`https://wa.me/${E.whatsapp.replace(/\D/g,"")}`:"";
 const infoRows=[
-  ["phone","Teléfono",E.telefono?`<span class="v" style="user-select:all">${esc(E.telefono)}</span>`:todo()],
+  ["phone","Teléfono",E.telefono?`<a class="v" href="tel:${E.telefono.replace(/[^\d+]/g,"")}">${esc(E.telefono)}</a>`:todo()],
   ["wa","WhatsApp",waUrl?`<a class="v" href="${waUrl}" target="_blank" rel="noopener">Escríbanos por WhatsApp</a>`:todo()],
-  ["mail","Correo comercial",E.correo?`<span class="v" style="user-select:all">${esc(E.correo)}</span>`:todo()],
+  ["mail","Correo comercial",E.correo?`<a class="v" href="mailto:${esc(E.correo)}">${esc(E.correo)}</a>`:todo()],
   ["pin","Dirección",E.direccion||E.ciudad?`<span class="v">${esc([E.direccion,E.ciudad].filter(Boolean).join(", "))}</span>`:todo()],
   ["clock","Horario de atención",E.horario?`<span class="v">${esc(E.horario)}</span>`:todo()]
 ];
