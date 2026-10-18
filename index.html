@@ -297,13 +297,25 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--graphite
 .info-list .k{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-muted)}
 .info-list .v{font-weight:600;word-break:break-word;color:var(--on-dark);text-decoration:none}
 a.v:hover{color:var(--yellow);text-decoration:underline}
-.soc-row{display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
+.soc-row{display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
 .soc-row .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-muted)}
-.soc-row > div,.soc-row.foot{display:flex;gap:10px;flex-direction:row}
-.soc-row.foot{border-top:0;padding-top:0;margin-top:18px}
-.soc{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;color:var(--on-dark);transition:background .2s,color .2s,border-color .2s}
-.soc:hover{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
-.soc svg{width:19px;height:19px}
+.soc-row.foot{flex-direction:row;gap:12px;border-top:0;padding-top:0;margin-top:20px}
+.soc{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;color:#fff;transition:transform .2s,box-shadow .2s}
+.soc svg{width:22px;height:22px}
+.soc.sm{width:24px;height:24px;border-radius:7px}.soc.sm svg{width:14px;height:14px}
+.soc-instagram{background:radial-gradient(circle at 30% 107%,#FDF497 0%,#FDF497 5%,#FD5949 45%,#D6249F 60%,#285AEB 90%)}
+.soc-tiktok{background:#010101}
+.soc-tiktok svg{filter:drop-shadow(-1.4px -1px 0 #25F4EE) drop-shadow(1.4px 1px 0 #FE2C55)}
+.soc-facebook{background:#1877F2}
+.soc-linkedin{background:#0A66C2}
+a.soc:hover,.soc-pill:hover .soc{transform:translateY(-2px);box-shadow:0 8px 18px -6px rgba(0,0,0,.6)}
+.soc-pills{display:flex;flex-direction:column;gap:10px}
+.soc-pill{display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;border:1px solid rgba(255,255,255,.14);border-radius:14px;text-decoration:none;color:var(--on-dark);transition:border-color .2s,background .2s}
+.soc-pill:hover{border-color:var(--yellow);background:rgba(233,185,69,.08)}
+.soc-pill b{display:block;font-size:15px}
+.soc-pill small{display:block;font-size:13px;color:var(--on-dark-muted);word-break:break-all}
+.soc-links{display:flex;flex-direction:column;gap:9px}
+.soc-link{display:inline-flex;align-items:center;gap:10px}
 .todo{display:inline-block;font:500 12px var(--f-mono);letter-spacing:.04em;color:var(--yellow);border:1px dashed rgba(233,185,69,.6);padding:2px 8px;border-radius:2px}
 .footer .todo{font-size:11px}
 @media (max-width:900px){.contact{grid-template-columns:1fr}}
@@ -560,7 +572,7 @@ dialog::backdrop{background:rgba(14,39,48,.72)}
 const CONFIG = {
   empresa: {
     razonSocial: "Ingerental SAS",
-    nit: "",                 // Ej: "900.000.000-0"
+    nit: "901.133.049",
     direccion: "",
     ciudad: "Envigado, Antioquia",
     telefono: "+57 300 610 6404",
@@ -641,7 +653,7 @@ const ICON = {
   shield:I('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',1.8),
   handshake:I('<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.9-3.9a3 3 0 0 0-4.2 0l-.9.9a1 1 0 1 1-3-3l2.8-2.8a5.8 5.8 0 0 1 7.1-.9l.5.3a4.6 4.6 0 0 0 3 .6L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',1.6),
   instagram:I('<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',2),
-  tiktok:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.3 2.3 1.6 3.7 3.9 3.9v2.6c-1.4.1-2.6-.3-3.9-1.1v5c0 6.4-7 8.4-9.8 3.8-1.8-3-.7-8.2 5.1-8.4v2.7c-.4.1-.9.2-1.3.3-1.3.4-2 1.2-1.8 2.6.4 2.7 5.3 3.5 4.9-1.8V3h2.9z"/></svg>',
+  tiktok:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.5h3.1c.2 1.9 1.5 3.6 3.6 3.9v3.2a7.3 7.3 0 0 1-3.6-1.1v6.6a6.1 6.1 0 1 1-6.1-6.1c.3 0 .6 0 .9.1v3.3a2.9 2.9 0 1 0 2.1 2.8z"/></svg>',
   facebook:I('<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',2),
   linkedin:I('<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',2),
   link:I('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>')
@@ -770,13 +782,15 @@ $("#foot-nav").innerHTML=NAV.map(([t,h])=>`<li><a href="${h}">${t}</a></li>`).jo
 $("#foot-svc").innerHTML=CONFIG.servicios.map(s=>`<li><a href="#servicio-${s.id}">${esc(s.nombre)}</a></li>`).join("");
 const red=(n,u)=>u?`<a href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`:"";
 const REDES=[["instagram","Instagram"],["tiktok","TikTok"],["facebook","Facebook"],["linkedin","LinkedIn"]].filter(([k])=>E.redes[k]);
-const redes=REDES.map(([k,n])=>red(n,E.redes[k])).join(" · ");
-const socialIcons=REDES.map(([k,n])=>`<a class="soc" href="${esc(E.redes[k])}" target="_blank" rel="noopener" aria-label="${n} de Ingerental SAS">${ICON[k]}</a>`).join("");
+const redes=REDES.map(([k,n])=>E.redes[k]?`<a class="soc-link" href="${esc(E.redes[k])}" target="_blank" rel="noopener"><span class="soc soc-${k} sm">${ICON[k]}</span>${n}</a>`:"").join("");
+const handle=u=>"@"+u.replace(/\/+$/,"").split("/").pop().replace(/^@/,"");
+const socialIcons=REDES.map(([k,n])=>`<a class="soc soc-${k}" href="${esc(E.redes[k])}" target="_blank" rel="noopener" aria-label="${n} de Ingerental SAS">${ICON[k]}</a>`).join("");
+const socialPills=REDES.map(([k,n])=>`<a class="soc-pill" href="${esc(E.redes[k])}" target="_blank" rel="noopener"><span class="soc soc-${k}">${ICON[k]}</span><span><b>${n}</b><small>${esc(handle(E.redes[k]))}</small></span></a>`).join("");
 if(socialIcons){
-  $("#info-list").insertAdjacentHTML("afterend",`<div class="soc-row"><span class="k">Síguenos</span><div>${socialIcons}</div></div>`);
+  $("#info-list").insertAdjacentHTML("afterend",`<div class="soc-row"><span class="k">Síguenos</span><div class="soc-pills">${socialPills}</div></div>`);
   $(".foot-brand").insertAdjacentHTML("beforeend",`<div class="soc-row foot">${socialIcons}</div>`);
 }
-$("#foot-co").innerHTML=`<li>${esc(E.razonSocial)}</li><li>NIT ${E.nit?esc(E.nit):todo()}</li><li>${E.ciudad?esc(E.ciudad):todo("Ciudad pendiente")}</li><li>${redes||todo("Redes sociales pendientes")}</li>`;
+$("#foot-co").innerHTML=`<li>${esc(E.razonSocial)}</li><li>NIT ${E.nit?esc(E.nit):todo()}</li><li>${E.ciudad?esc(E.ciudad):todo("Ciudad pendiente")}</li>${redes?`<li class="soc-links">${redes}</li>`:`<li>${todo("Redes sociales pendientes")}</li>`}`;
 $("#copyright").textContent=`© ${new Date().getFullYear()} ${E.razonSocial}. Todos los derechos reservados.`;
 $("#foot-legal").innerHTML=E.politicaPrivacidad?`<a href="${esc(E.politicaPrivacidad)}" target="_blank" rel="noopener" style="color:inherit">Política de tratamiento de datos</a>`:`Política de tratamiento de datos ${todo("Pendiente")}`;
 
