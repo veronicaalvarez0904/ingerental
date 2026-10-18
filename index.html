@@ -742,8 +742,11 @@ const infoRows=[
 $("#info-list").innerHTML=infoRows.map(([ic,k,v])=>`<li>${ic==="wa"?ICON.wa.replace('<svg','<svg style="width:20px;height:20px;flex:none;color:var(--yellow);margin-top:2px"'):ICON[ic]}<div><span class="k">${k}</span>${v}</div></li>`).join("");
 $("#privacy-link").innerHTML=E.politicaPrivacidad?`<a href="${esc(E.politicaPrivacidad)}" target="_blank" rel="noopener">política de tratamiento de datos</a>`:`política de tratamiento de datos ${todo("Enlace pendiente")}`;
 $("#f-service").insertAdjacentHTML("beforeend",CONFIG.servicios.map(s=>`<option value="${s.id}">${esc(s.nombre)}</option>`).join("")+`<option value="otro">Otro / varios servicios</option>`);
-if(waUrl){const h=$("#hero-wa");h.href=`${waUrl}?text=${encodeURIComponent("Hola Ingerental SAS, quiero información sobre sus servicios.")}`;h.insertAdjacentHTML("afterbegin",ICON.wa);h.hidden=false}
-if(waUrl) $("#wa-slot").innerHTML=`<a class="wa" href="${waUrl}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">${ICON.wa}</a>`;
+// Mensaje inicial de los botones directos de WhatsApp (portada y botón flotante)
+const WA_SALUDO="Buen día, equipo de Ingerental SAS.\n\nMe comunico a través de su página web porque me gustaría solicitar una cotización para un proyecto. Agradezco su atención y quedo pendiente de su respuesta para compartirles los detalles.\n\nMuchas gracias.";
+const waDirect=waUrl?`${waUrl}?text=${encodeURIComponent(WA_SALUDO)}`:"";
+if(waUrl){const h=$("#hero-wa");h.href=waDirect;h.insertAdjacentHTML("afterbegin",ICON.wa);h.hidden=false}
+if(waUrl) $("#wa-slot").innerHTML=`<a class="wa" href="${waDirect}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">${ICON.wa}</a>`;
 
 /* Footer */
 $("#foot-nav").innerHTML=NAV.map(([t,h])=>`<li><a href="${h}">${t}</a></li>`).join("")+`<li><a href="#maquinaria">Maquinaria</a></li>`;
