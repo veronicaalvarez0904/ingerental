@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ingerental.com/sitemap.xml
