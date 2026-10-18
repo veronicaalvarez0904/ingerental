@@ -277,9 +277,6 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--graphite
 .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err)}
 .err-msg{font-size:13px;color:var(--err);font-weight:600;min-height:0}
 .err-msg:empty{display:none}
-.consent{grid-column:1/-1;display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--muted)}
-.consent input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--graphite)}
-.consent label{font-weight:500;color:var(--muted);font-size:14px}
 .form-actions{grid-column:1/-1;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .form-actions .hint{font-size:13px;color:var(--muted)}
 .btn[aria-busy="true"]{opacity:.7;pointer-events:none}
@@ -510,7 +507,6 @@ dialog::backdrop{background:rgba(14,39,48,.72)}
           <div class="field"><label for="f-service">Servicio de interés<span class="req" aria-hidden="true">*</span></label><select id="f-service" name="servicio" required aria-describedby="e-service"><option value="">Seleccione un servicio</option></select><span class="err-msg" id="e-service"></span></div>
           <div class="field"><label for="f-location">Ubicación del proyecto<span class="req" aria-hidden="true">*</span></label><input id="f-location" name="ubicacion" placeholder="Municipio, departamento" required aria-describedby="e-location"><span class="err-msg" id="e-location"></span></div>
           <div class="field full"><label for="f-message">Descripción de la necesidad<span class="req" aria-hidden="true">*</span></label><textarea id="f-message" name="descripcion" required placeholder="Alcance, cantidades aproximadas, fechas estimadas, condiciones de acceso…" aria-describedby="e-message"></textarea><span class="err-msg" id="e-message"></span></div>
-          <div class="consent"><input type="checkbox" id="f-consent" name="autorizacion" required aria-describedby="e-consent"><div><label for="f-consent">Autorizo a Ingerental SAS a tratar mis datos personales para atender esta solicitud, conforme a la Ley 1581 de 2012 y a su <span id="privacy-link"></span>.</label><span class="err-msg" id="e-consent" style="display:block"></span></div></div>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit" id="submit-btn">Enviar por WhatsApp</button>
             <span class="hint">Se abrirá WhatsApp con su solicitud lista para enviar. Los campos con <span style="color:var(--err)">*</span> son obligatorios.</span>
@@ -539,7 +535,6 @@ dialog::backdrop{background:rgba(14,39,48,.72)}
     </div>
     <div class="foot-bottom">
       <span id="copyright"></span>
-      <span id="foot-legal"></span>
     </div>
   </div>
 </footer>
@@ -579,7 +574,6 @@ const CONFIG = {
     correo: "info@ingerental.com",
     horario: "8:00 a. m. – 6:00 p. m.",
     whatsapp: "573006106404", // Solo dígitos con indicativo de país (57 = Colombia)
-    politicaPrivacidad: "",  // URL de la política de tratamiento de datos
     redes: {
       instagram: "https://www.instagram.com/ingerental.s.a.s",
       tiktok: "https://www.tiktok.com/@inge.rental.sas",
@@ -777,7 +771,6 @@ const infoRows=[
   ["clock","Horario de atención",E.horario?`<span class="v">${esc(E.horario)}</span>`:todo()]
 ];
 $("#info-list").innerHTML=infoRows.map(([ic,k,v])=>`<li>${ic==="wa"?ICON.wa.replace('<svg','<svg style="width:20px;height:20px;flex:none;color:var(--yellow);margin-top:2px"'):ICON[ic]}<div><span class="k">${k}</span>${v}</div></li>`).join("");
-$("#privacy-link").innerHTML=E.politicaPrivacidad?`<a href="${esc(E.politicaPrivacidad)}" target="_blank" rel="noopener">política de tratamiento de datos</a>`:`política de tratamiento de datos ${todo("Enlace pendiente")}`;
 $("#f-service").insertAdjacentHTML("beforeend",CONFIG.servicios.map(s=>`<option value="${s.id}">${esc(s.nombre)}</option>`).join("")+`<option value="otro">Otro / varios servicios</option>`);
 // Mensaje inicial de los botones directos de WhatsApp (portada y botón flotante)
 const WA_SALUDO="Buen día, equipo de Ingerental SAS.\n\nMe comunico a través de su página web porque me gustaría solicitar una cotización para un proyecto. Agradezco su atención y quedo pendiente de su respuesta para compartirles los detalles.\n\nMuchas gracias.";
@@ -799,7 +792,6 @@ if(socialIcons){
 }
 $("#foot-co").innerHTML=`<li>${esc(E.razonSocial)}</li><li>NIT ${E.nit?esc(E.nit):todo()}</li><li>${E.ciudad?esc(E.ciudad):todo("Ciudad pendiente")}</li>${redes?`<li class="soc-links">${redes}</li>`:`<li>${todo("Redes sociales pendientes")}</li>`}`;
 $("#copyright").textContent=`© ${new Date().getFullYear()} ${E.razonSocial}. Todos los derechos reservados.`;
-$("#foot-legal").innerHTML=E.politicaPrivacidad?`<a href="${esc(E.politicaPrivacidad)}" target="_blank" rel="noopener" style="color:inherit">Política de tratamiento de datos</a>`:`Política de tratamiento de datos ${todo("Pendiente")}`;
 
 /* ============================ INTERACCIÓN ============================ */
 // Menú móvil
@@ -855,9 +847,6 @@ function check(id){
   const ok=r===true; f.classList.toggle("invalid",!ok); el.setAttribute("aria-invalid",!ok); msg.textContent=ok?"":r; return ok;
 }
 Object.keys(rules).forEach(id=>{const el=$("#"+id);el.addEventListener("blur",()=>{if(el.value)check(id)});el.addEventListener("input",()=>{if(el.closest(".field").classList.contains("invalid"))check(id)})});
-const consent=$("#f-consent");
-function checkConsent(){const ok=consent.checked;$("#e-consent").textContent=ok?"":"Debe autorizar el tratamiento de datos para enviar la solicitud.";consent.setAttribute("aria-invalid",!ok);return ok}
-consent.addEventListener("change",checkConsent);
 
 function summary(d){
   const s=svcById(d.servicio);
@@ -873,12 +862,12 @@ Necesidad: ${d.descripcion}`;
 }
 form.addEventListener("submit",async e=>{
   e.preventDefault(); out.innerHTML="";
-  const results=Object.keys(rules).map(check); const okC=checkConsent();
-  if(results.includes(false)||!okC){
+  const results=Object.keys(rules).map(check);
+  if(results.includes(false)){
     const first=form.querySelector('[aria-invalid="true"]'); first&&first.focus();
     out.innerHTML=`<div class="result bad"><strong>Revise los campos marcados.</strong><span>Faltan datos o hay campos con formato incorrecto.</span></div>`; return;
   }
-  const data=Object.fromEntries(new FormData(form)); data.autorizacion=true;
+  const data=Object.fromEntries(new FormData(form));
   const text=summary(data);
   const url=`${waUrl}?text=${encodeURIComponent(text)}`;
   const w=window.open(url,"_blank");

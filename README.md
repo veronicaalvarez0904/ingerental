@@ -23,7 +23,6 @@ Todo lo editable está en el bloque `CONFIG` al inicio del `<script>` de `index.
 |---|---|
 | `empresa.nit`, `direccion`, `ciudad`, `telefono`, `correo`, `horario` | Datos de contacto. Vacío = se muestra "Pendiente de configurar". |
 | `empresa.whatsapp` | Número de WhatsApp con indicativo, solo dígitos. Recibe las solicitudes del formulario. |
-| `empresa.politicaPrivacidad` | URL de la política de tratamiento de datos (Ley 1581 de 2012). |
 | `empresa.redes` | URLs de Facebook, Instagram y LinkedIn. |
 | `servicios` | Textos, listas y foto de cada servicio. |
 | `proyectos` | Obras ejecutadas. Quite `demo:true` cuando sean proyectos reales. |
@@ -56,7 +55,7 @@ Use solo fotos propias y evite placas de vehículos o rostros sin autorización.
 ## Formulario de cotización (WhatsApp)
 
 El formulario no envía correos ni usa servidores. Al presionar **Enviar por WhatsApp**:
-1. Valida los campos obligatorios, el formato del correo y la autorización de datos.
+1. Valida los campos obligatorios y el formato del correo.
 2. Abre WhatsApp (app o WhatsApp Web) con la solicitud ya redactada, dirigida al número de `empresa.whatsapp`.
 3. El visitante solo presiona *Enviar* en WhatsApp.
 
@@ -92,4 +91,4 @@ python3 -m http.server 8080
 
 **Operativo:** fotos y videos reales, envío de solicitudes por WhatsApp (formulario, botón en portada y botón flotante), navegación y menú móvil, detalle de servicios, filtros de proyectos, fichas de maquinaria, validaciones del formulario, SEO básico (título, descripción, Open Graph, sitemap).
 
-**Por completar:** política de tratamiento de datos; verificar nombres, ubicaciones y descripciones de proyectos; capacidades y disponibilidad de cada equipo.
+**Por completar:** verificar nombres, ubicaciones y descripciones de proyectos; capacidades y disponibilidad de cada equipo.
