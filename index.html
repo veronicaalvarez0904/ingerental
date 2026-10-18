@@ -74,6 +74,10 @@ img{max-width:100%;display:block}
 .btn-ghost{border-color:currentColor;color:inherit;background:transparent}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
 .btn-dark{background:var(--graphite);color:var(--white)}
+.btn-wa{background:#1F8F4E;color:#fff}
+.btn-wa:hover{background:#18763F}
+.btn-wa svg{width:20px;height:20px}
+.btn-wa:hover svg{transform:none}
 .btn-dark:hover{background:var(--ink)}
 .link-arrow{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;letter-spacing:.02em;background:none;border:0;padding:6px 0;color:var(--ink);cursor:pointer;font-family:var(--f-body);border-bottom:2px solid var(--yellow)}
 .link-arrow svg{width:16px;height:16px;transition:transform .2s}
@@ -363,6 +367,7 @@ dialog::backdrop{background:rgba(14,39,48,.72)}
         <div class="actions">
           <a class="btn btn-primary" href="#servicios">Conoce nuestros servicios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn-ghost" href="#contacto" data-quote>Solicita una cotización</a>
+          <a class="btn btn-wa" id="hero-wa" target="_blank" rel="noopener" hidden>Escríbenos por WhatsApp</a>
         </div>
       </div>
       <div class="slot" data-slot="hero"></div>
@@ -487,8 +492,8 @@ dialog::backdrop{background:rgba(14,39,48,.72)}
           <div class="field full"><label for="f-message">Descripción de la necesidad<span class="req" aria-hidden="true">*</span></label><textarea id="f-message" name="descripcion" required placeholder="Alcance, cantidades aproximadas, fechas estimadas, condiciones de acceso…" aria-describedby="e-message"></textarea><span class="err-msg" id="e-message"></span></div>
           <div class="consent"><input type="checkbox" id="f-consent" name="autorizacion" required aria-describedby="e-consent"><div><label for="f-consent">Autorizo a Ingerental SAS a tratar mis datos personales para atender esta solicitud, conforme a la Ley 1581 de 2012 y a su <span id="privacy-link"></span>.</label><span class="err-msg" id="e-consent" style="display:block"></span></div></div>
           <div class="form-actions">
-            <button class="btn btn-primary" type="submit" id="submit-btn">Enviar solicitud</button>
-            <span class="hint">Los campos con <span style="color:var(--err)">*</span> son obligatorios.</span>
+            <button class="btn btn-primary" type="submit" id="submit-btn">Enviar por WhatsApp</button>
+            <span class="hint">Se abrirá WhatsApp con su solicitud lista para enviar. Los campos con <span style="color:var(--err)">*</span> son obligatorios.</span>
           </div>
           <div id="form-result" role="status" aria-live="polite" style="display:contents"></div>
         </form>
@@ -553,13 +558,10 @@ const CONFIG = {
     telefono: "",            // Ej: "+57 300 000 0000"
     correo: "",              // Ej: "comercial@ingerental.com"
     horario: "",             // Ej: "Lunes a viernes, 7:00 a. m. – 5:00 p. m."
-    whatsapp: "",            // Solo dígitos con indicativo. Ej: "573000000000"
+    whatsapp: "573006106404", // Solo dígitos con indicativo de país (57 = Colombia)
     politicaPrivacidad: "",  // URL de la política de tratamiento de datos
     redes: { facebook: "", instagram: "", linkedin: "" }
   },
-  // Para recibir solicitudes: URL de Formspree, Getform, Make, n8n o una API propia
-  // que acepte POST con JSON. Vacío = el formulario NO envía y lo dice al usuario.
-  formulario: { endpoint: "" },
   // Fotografías: pegue la URL o ruta de cada imagen. Vacío = espacio reservado.
   fotos: {
     hero:      { src: "", alt: "Maquinaria pesada trabajando en obra",            nota: "Foto panorámica de obra o maquinaria en operación (horizontal, mín. 1600 px)" },
@@ -740,6 +742,7 @@ const infoRows=[
 $("#info-list").innerHTML=infoRows.map(([ic,k,v])=>`<li>${ic==="wa"?ICON.wa.replace('<svg','<svg style="width:20px;height:20px;flex:none;color:var(--yellow);margin-top:2px"'):ICON[ic]}<div><span class="k">${k}</span>${v}</div></li>`).join("");
 $("#privacy-link").innerHTML=E.politicaPrivacidad?`<a href="${esc(E.politicaPrivacidad)}" target="_blank" rel="noopener">política de tratamiento de datos</a>`:`política de tratamiento de datos ${todo("Enlace pendiente")}`;
 $("#f-service").insertAdjacentHTML("beforeend",CONFIG.servicios.map(s=>`<option value="${s.id}">${esc(s.nombre)}</option>`).join("")+`<option value="otro">Otro / varios servicios</option>`);
+if(waUrl){const h=$("#hero-wa");h.href=`${waUrl}?text=${encodeURIComponent("Hola Ingerental SAS, quiero información sobre sus servicios.")}`;h.insertAdjacentHTML("afterbegin",ICON.wa);h.hidden=false}
 if(waUrl) $("#wa-slot").innerHTML=`<a class="wa" href="${waUrl}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">${ICON.wa}</a>`;
 
 /* Footer */
@@ -811,7 +814,8 @@ consent.addEventListener("change",checkConsent);
 
 function summary(d){
   const s=svcById(d.servicio);
-  return `Solicitud de cotización — ${CONFIG.empresa.razonSocial}
+  return `Hola ${CONFIG.empresa.razonSocial}, quiero solicitar una cotización.
+
 Nombre: ${d.nombre}
 Empresa: ${d.empresa||"—"}
 Correo: ${d.correo}
@@ -829,27 +833,12 @@ form.addEventListener("submit",async e=>{
   }
   const data=Object.fromEntries(new FormData(form)); data.autorizacion=true;
   const text=summary(data);
-  if(!CONFIG.formulario.endpoint){
-    out.innerHTML=`<div class="result info"><strong>Su solicitud no se ha enviado todavía.</strong>
-      <span>El formulario aún no está conectado a un servicio de recepción. Copie el resumen y compártalo por el canal comercial de la empresa${waUrl?" o por WhatsApp":""}.</span>
-      <pre id="sum">${esc(text)}</pre>
-      <div class="row"><button type="button" class="btn btn-dark" id="copy-sum">Copiar resumen</button>${waUrl?`<a class="btn btn-primary" target="_blank" rel="noopener" href="${waUrl}?text=${encodeURIComponent(text)}">Enviar por WhatsApp</a>`:""}</div></div>`;
-    $("#copy-sum").addEventListener("click",async ev=>{
-      const b=ev.currentTarget;
-      try{await navigator.clipboard.writeText(text);b.textContent="Resumen copiado"}
-      catch{const r=document.createRange();r.selectNodeContents($("#sum"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Texto seleccionado: cópielo con Ctrl+C"}
-    });
-    return;
-  }
-  btn.setAttribute("aria-busy","true"); btn.innerHTML=`<span class="spinner" aria-hidden="true"></span> Enviando…`;
-  try{
-    const res=await fetch(CONFIG.formulario.endpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({...data,resumen:text,origen:location.href})});
-    if(!res.ok) throw new Error(res.status);
-    form.reset();
-    out.innerHTML=`<div class="result ok"><strong>Solicitud enviada.</strong><span>Gracias, ${esc(data.nombre.split(" ")[0])}. Nuestro equipo comercial se comunicará con usted.</span></div>`;
-  }catch(err){
-    out.innerHTML=`<div class="result bad"><strong>No pudimos enviar su solicitud.</strong><span>Revise su conexión e inténtelo de nuevo${E.telefono?`, o comuníquese al ${esc(E.telefono)}`:""}.</span></div>`;
-  }finally{btn.removeAttribute("aria-busy");btn.textContent="Enviar solicitud"}
+  const url=`${waUrl}?text=${encodeURIComponent(text)}`;
+  const w=window.open(url,"_blank");
+  if(!w) location.href=url;
+  out.innerHTML=`<div class="result ok"><strong>Abrimos WhatsApp con su solicitud.</strong>
+    <span>Revise el mensaje y presione <b>Enviar</b> en WhatsApp para que llegue a nuestro equipo comercial. Si WhatsApp no se abrió, use este botón:</span>
+    <div class="row"><a class="btn btn-primary" target="_blank" rel="noopener" href="${url}">Abrir WhatsApp</a></div></div>`;
 });
 
 /* ============================ CURVAS DE NIVEL (hero) ============================ */
